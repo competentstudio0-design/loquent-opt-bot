@@ -15,7 +15,17 @@ async def main():
     dp.include_router(router)
 
     print("BOT STARTED")
+from google_sheets import init_sheets
 
+async def main():
+    init_sheets()   # 👈 ВОТ ЭТО КРИТИЧНО
+
+    bot = Bot(token=os.getenv("BOT_TOKEN"))
+    dp = Dispatcher()
+
+    dp.include_router(router)
+
+    await dp.start_polling(bot)
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
