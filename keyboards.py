@@ -8,8 +8,8 @@ MAIN_KB = ReplyKeyboardMarkup(
             KeyboardButton(
                 text="🛍 Открыть магазин",
                 web_app=WebAppInfo(
-                    url="https://YOUR-BACKEND-URL/"
-                )
+    url="https://loquent-opt-bot-production.up.railway.app/"
+)
             )
         ]
     ],
