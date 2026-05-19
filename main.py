@@ -9,7 +9,7 @@ from aiogram.client.default import DefaultBotProperties
 
 from google_sheets import sheet
 
-TOKEN = os.getenv("BOT_TOKEN")
+TOKEN = os.getenv("8816584489:AAGTqxu-ySW-DkpYhQeunyWBUXJK5jOwJYo")
 
 bot = Bot(
     token=TOKEN,
