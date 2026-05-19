@@ -17,4 +17,4 @@ creds = Credentials.from_service_account_info(
 
 client = gspread.authorize(creds)
 
-sheet = client.open("НАЗВАНИЕ_ТАБЛИЦЫ").sheet1
+sheet = client.open("НАЛИЧИЕ").sheet1
