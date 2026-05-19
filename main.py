@@ -7,11 +7,7 @@ from aiogram.filters import CommandStart
 
 from dotenv import load_dotenv
 
-from google_sheets import (
-    products_sheet,
-    orders_sheet
-)
-
+from google_sheets import products_sheet, orders_sheet
 from keyboards import main_keyboard
 
 load_dotenv()
@@ -24,7 +20,6 @@ dp = Dispatcher()
 
 @dp.message(CommandStart())
 async def start(message: Message):
-
     await message.answer(
         "🔥 Loquent Opt Shop запущен",
         reply_markup=main_keyboard
@@ -33,7 +28,6 @@ async def start(message: Message):
 
 @dp.message(lambda msg: msg.text == "📦 Каталог")
 async def catalog(message: Message):
-
     products = products_sheet.get_all_records()
 
     if not products:
@@ -41,7 +35,6 @@ async def catalog(message: Message):
         return
 
     for product in products:
-
         text = (
             f"📦 {product['name']}\n"
             f"💰 Цена: {product['price']} ₽\n"
@@ -51,22 +44,16 @@ async def catalog(message: Message):
         photo = product.get("photo")
 
         try:
-
             if photo:
-                await message.answer_photo(
-                    photo=photo,
-                    caption=text
-                )
+                await message.answer_photo(photo=photo, caption=text)
             else:
                 await message.answer(text)
-
         except Exception:
             await message.answer(text)
 
 
 @dp.message(lambda msg: msg.text == "🛒 Мои заказы")
 async def my_orders(message: Message):
-
     orders = orders_sheet.get_all_records()
 
     user_orders = [
@@ -81,7 +68,6 @@ async def my_orders(message: Message):
     text = "🛒 Твои заказы:\n\n"
 
     for order in user_orders:
-
         text += (
             f"📦 {order['product']}\n"
             f"🔢 Кол-во: {order['quantity']}\n\n"
@@ -91,12 +77,9 @@ async def my_orders(message: Message):
 
 
 async def main():
-
     print("BOT STARTED")
-
     await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
     asyncio.run(main())
