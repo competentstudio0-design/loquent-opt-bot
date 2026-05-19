@@ -18,7 +18,14 @@ async def main():
 from google_sheets import init_sheets
 
 async def main():
-    init_sheets()   # 👈 ВОТ ЭТО КРИТИЧНО
+    init_sheets( bot = Bot(token=os.getenv("BOT_TOKEN"))
+    dp = Dispatcher()
+
+    dp.include_router(router)
+
+    print("BOT STARTED")
+
+    await dp.start_polling(bot))
 
     bot = Bot(token=os.getenv("BOT_TOKEN"))
     dp = Dispatcher()
