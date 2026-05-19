@@ -1,10 +1,11 @@
+ import asyncio
+import os
+
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
-from aiogram.filters import Command
+from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.client.default import DefaultBotProperties
-import asyncio
-import os
 
 TOKEN = os.getenv("BOT_TOKEN")
 
@@ -15,12 +16,13 @@ bot = Bot(
 
 dp = Dispatcher()
 
-@dp.message(Command("start"))
-async def start(message: Message):
+
+@dp.message(CommandStart())
+async def start_handler(message: Message):
     await message.answer(
-        "✅ Loquent Opt Bot запущен\n\n"
-        "Каталог скоро будет подключен."
+        "✅ Loquent Opt Bot работает!"
     )
+
 
 async def main():
     await dp.start_polling(bot)
