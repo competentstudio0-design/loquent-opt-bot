@@ -1,11 +1,23 @@
+import asyncio
 import os
-import uvicorn
+
+from aiogram import Bot, Dispatcher
+from dotenv import load_dotenv
+
+from handlers import router
+
+load_dotenv()
+
+bot = Bot(token=os.getenv("BOT_TOKEN"))
+dp = Dispatcher()
+
+dp.include_router(router)
+
+
+async def main():
+    print("BOT STARTED")
+    await dp.start_polling(bot)
+
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
-
-    uvicorn.run(
-        "main:app",
-        host="0.0.0.0",
-        port=port
-    )
+    asyncio.run(main())
