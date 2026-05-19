@@ -8,7 +8,7 @@ MAIN_KB = ReplyKeyboardMarkup(
             KeyboardButton(
                 text="🛍 Открыть магазин",
                 web_app=WebAppInfo(
-    url="https://https://loquent-opt-bot-production.up.railway.app/"
+    url="https://loquent-opt-bot-production.up.railway.app/"
 )
             )
         ]
