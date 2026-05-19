@@ -1,4 +1,3 @@
-
 import asyncio
 import os
 
@@ -23,33 +22,36 @@ dp = Dispatcher()
 @dp.message(CommandStart())
 async def start_handler(message: Message):
     await message.answer(
-        "Добро пожаловать"
+        "Добро пожаловать в LOQUENT OPT!"
     )
+
+
 @dp.message(Command("catalog"))
-async def catalog(message: Message):
+async def catalog_handler(message: Message):
 
     products = sheet.get_all_records()
 
-    text = "📦 Каталог:\n\n"
+    if not products:
+        await message.answer("Каталог пуст.")
+        return
+
+    text = "📦 <b>Каталог товаров:</b>\n\n"
 
     for product in products:
         text += (
-            f"{product['id']}. "
-            f"{product['name']}\n"
-            f"💰 {product['price']} ₽\n"
+            f"🆔 {product['id']}\n"
+            f"📦 {product['name']}\n"
+            f"💰 Цена: {product['price']} ₽\n"
             f"📦 Остаток: {product['stock']}\n\n"
         )
 
     await message.answer(text)
 
+
 async def main():
     await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling(bot)
 
-    await dp.start_polling(
-        bot,
-        skip_updates=True
-    )
 
 if __name__ == "__main__":
     asyncio.run(main())
-
