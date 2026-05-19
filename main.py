@@ -1,4 +1,4 @@
-from aiogram import Bot, Dispatcher
+ aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
 from aiogram.types import Message
