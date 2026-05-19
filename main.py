@@ -10,7 +10,7 @@ load_dotenv()
 
 
 async def main():
-    bot = Bot(token=os.getenv("8816584489:AAGTqxu-ySW-DkpYhQeunyWBUXJK5jOwJYo"))
+   bot = Bot(token=os.getenv("BOT_TOKEN"))
     dp = Dispatcher()
 
     dp.include_router(router)
