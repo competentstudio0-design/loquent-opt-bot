@@ -1,5 +1,7 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
+
 from google_sheets import products_sheet, orders_sheet
 
 app = FastAPI()
@@ -10,7 +12,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # 📦 товары для Mini App
 @app.get("/products")
 def get_products():
