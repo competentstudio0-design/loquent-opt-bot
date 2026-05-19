@@ -11,18 +11,18 @@ load_dotenv()
 
 
 async def main():
-    # 🔥 сначала инициализируем Sheets
+    # 🔥 важно: сначала всё внешнее
     init_sheets()
 
-    # 🤖 создаём bot и dispatcher
-    bot = Bot(token=os.getenv("BOT_TOKEN"))
+    token = os.getenv("BOT_TOKEN")
+
+    bot = Bot(token=token)
     dp = Dispatcher()
 
     dp.include_router(router)
 
     print("BOT STARTED")
 
-    # 🚀 запускаем polling
     await dp.start_polling(bot)
 
 
