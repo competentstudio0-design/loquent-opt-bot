@@ -8,14 +8,15 @@ from handlers import router
 
 load_dotenv()
 
-bot = Bot(token=os.getenv("BOT_TOKEN"))
-dp = Dispatcher()
-
-dp.include_router(router)
-
 
 async def main():
+    bot = Bot(token=os.getenv("8816584489:AAGTqxu-ySW-DkpYhQeunyWBUXJK5jOwJYo"))
+    dp = Dispatcher()
+
+    dp.include_router(router)
+
     print("BOT STARTED")
+
     await dp.start_polling(bot)
 
 
