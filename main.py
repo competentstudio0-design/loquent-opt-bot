@@ -25,7 +25,7 @@ async def start_handler(message: Message):
     await message.answer(
         "Добро пожаловать"
     )
-@dpmessage(Command("catalog"))
+@dp.message(Command("catalog"))
 async def catalog(message: Message):
 
     products = sheet.get_all_records()
