@@ -2,56 +2,101 @@ import asyncio
 import os
 
 from aiogram import Bot, Dispatcher
-from aiogram.enums import ParseMode
-from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
-from aiogram.client.default import DefaultBotProperties
+from aiogram.filters import CommandStart
 
-from google_sheets import sheet
+from dotenv import load_dotenv
 
-TOKEN = os.getenv("8816584489:AAGTqxu-ySW-DkpYhQeunyWBUXJK5jOwJYo")
-
-bot = Bot(
-    token=TOKEN,
-    default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+from google_sheets import (
+    products_sheet,
+    orders_sheet
 )
 
+from keyboards import main_keyboard
+
+load_dotenv()
+
+TOKEN = os.getenv("BOT_TOKEN")
+
+bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
 
 @dp.message(CommandStart())
-async def start_handler(message: Message):
+async def start(message: Message):
+
     await message.answer(
-        "Добро пожаловать в LOQUENT OPT!"
+        "🔥 Loquent Opt Shop запущен",
+        reply_markup=main_keyboard
     )
 
 
-@dp.message(Command("catalog"))
-async def catalog_handler(message: Message):
+@dp.message(lambda msg: msg.text == "📦 Каталог")
+async def catalog(message: Message):
 
-    products = sheet.get_all_records()
+    products = products_sheet.get_all_records()
 
     if not products:
         await message.answer("Каталог пуст.")
         return
 
-    text = "📦 <b>Каталог товаров:</b>\n\n"
-
     for product in products:
-        text += (
-            f"🆔 {product['id']}\n"
+
+        text = (
             f"📦 {product['name']}\n"
             f"💰 Цена: {product['price']} ₽\n"
-            f"📦 Остаток: {product['stock']}\n\n"
+            f"📦 Остаток: {product['stock']}"
+        )
+
+        photo = product.get("photo")
+
+        try:
+
+            if photo:
+                await message.answer_photo(
+                    photo=photo,
+                    caption=text
+                )
+            else:
+                await message.answer(text)
+
+        except Exception:
+            await message.answer(text)
+
+
+@dp.message(lambda msg: msg.text == "🛒 Мои заказы")
+async def my_orders(message: Message):
+
+    orders = orders_sheet.get_all_records()
+
+    user_orders = [
+        order for order in orders
+        if str(order["user_id"]) == str(message.from_user.id)
+    ]
+
+    if not user_orders:
+        await message.answer("У тебя пока нет заказов.")
+        return
+
+    text = "🛒 Твои заказы:\n\n"
+
+    for order in user_orders:
+
+        text += (
+            f"📦 {order['product']}\n"
+            f"🔢 Кол-во: {order['quantity']}\n\n"
         )
 
     await message.answer(text)
 
 
 async def main():
-    await bot.delete_webhook(drop_pending_updates=True)
+
+    print("BOT STARTED")
+
     await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
+    asyncio.run(main())
     asyncio.run(main())
