@@ -9,7 +9,9 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive"
 ]
 
-creds_dict = json.loads(os.getenv("GOOGLE_CREDENTIALS"))
+creds_dict = json.loads(
+    os.getenv("GOOGLE_CREDENTIALS")
+)
 
 creds = Credentials.from_service_account_info(
     creds_dict,
@@ -18,6 +20,9 @@ creds = Credentials.from_service_account_info(
 
 client = gspread.authorize(creds)
 
-sheet = client.open_by_key(
-    "17fAEH1Gn-vpjy90V9dwJGe6ADSQfixdOSBIGTbOb-Lk"
-).sheet1
+spreadsheet = client.open_by_key(
+    "17fAEH1Gn-vpjy90V9dwJGe6ADSQfixdOSBlGTbOb-Lk"
+)
+
+products_sheet = spreadsheet.worksheet("products")
+orders_sheet = spreadsheet.worksheet("orders")
