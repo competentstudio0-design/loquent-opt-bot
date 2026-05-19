@@ -1,5 +1,6 @@
 import json
 import os
+
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -17,4 +18,6 @@ creds = Credentials.from_service_account_info(
 
 client = gspread.authorize(creds)
 
-sheet = client.open_by_key("17fAEH1Gn-vpjy90V9dwJGe6ADSQfixdOSBlGTbOb-Lk").sheet1
+sheet = client.open_by_key(
+    "17fAEH1Gn-vpjy90V9dwJGe6ADSQfixdOSBIGTbOb-Lk"
+).sheet1
