@@ -23,9 +23,9 @@ dp = Dispatcher()
 @dp.message(CommandStart())
 async def start_handler(message: Message):
     await message.answer(
-        "✅ Loquent Opt Bot работает!"
+        "Добро пожаловать"
     )
-@dp.message(Command("catalog"))
+@dpmessage(Command("catalog"))
 async def catalog(message: Message):
 
     products = sheet.get_all_records()
@@ -44,7 +44,11 @@ async def catalog(message: Message):
 
 async def main():
     await bot.delete_webhook(drop_pending_updates=True)
-    await dp.start_polling(bot)
+
+    await dp.start_polling(
+        bot,
+        skip_updates=True
+    )
 
 if __name__ == "__main__":
     asyncio.run(main())
