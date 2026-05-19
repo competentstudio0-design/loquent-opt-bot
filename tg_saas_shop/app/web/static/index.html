@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<script src='https://telegram.org/js/telegram-web-app.js'></script>
+</head>
+<body>
+<h2>Shop</h2>
+<div id='products'></div>
+<script>
+const tg = window.Telegram.WebApp;
+tg.expand();
+
+async function load(){
+ const res = await fetch('/products');
+ const data = await res.json();
+ const c = document.getElementById('products');
+ data.forEach(p=>{
+  const d=document.createElement('div');
+  d.innerHTML = p.name + ' ' + p.price +
+  "<button onclick='buy("+JSON.stringify(p.name)+")'>buy</button>";
+  c.appendChild(d);
+ });
+}
+function buy(name){
+ tg.sendData(JSON.stringify({action:'order',product:name,user_id:tg.initDataUnsafe.user.id}));
+}
+load();
+</script>
+</body>
+</html>
