@@ -17,7 +17,7 @@ async def start(message: Message):
         "🔥 Магазин запущен",
         reply_markup=MAIN_KB
     )
-await message.answer(str(main_keyboard))
+
 
 # 📦 КАТАЛОГ (через Sheets)
 @router.message(lambda m: m.text == "📦 Каталог")
